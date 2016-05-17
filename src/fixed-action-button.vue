@@ -29,7 +29,7 @@ module.exports =
       default: -> ["fixed-action-btn"]
     "closeOnClick":
       type: Boolean
-      defaul: false
+      default: false
     "clickToToggle":
       type: Boolean
       default: false
