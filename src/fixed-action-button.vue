@@ -1,15 +1,15 @@
 // out: ..
-<template lang="jade">
+<template lang="pug">
 div(
-    :style="{position:'fixed'}",
+    :style="computedStyle",
     @click.prevent="onInnerClick",
     @mouseenter="onHover",
     @mouseleave="onUnhover",
-    :class="class"
+    :class="computedClass"
     )
-  ul(v-if="opened",v-el:fab)
-    slot No content
-  span(@click="onFabClick | notPrevented")
+  ul(v-if="opened",v-el:fab, v-bind:transition="transition",v-bind:style="fabStyle")
+    slot
+  a(@click="onFabClick")
     slot(name="fab")
 </template>
 
@@ -19,14 +19,16 @@ module.exports =
   mixins:[
     require("vue-mixins/onceDocument")
     require("vue-mixins/isOpened")
+    require("vue-mixins/style")
+    require("vue-mixins/class")
   ]
 
-  filters:
-    notPrevented: require("vue-filters/notPrevented")
 
   props:
     "class":
       default: -> ["fixed-action-btn"]
+    "style":
+      default: -> []
     "closeOnClick":
       type: Boolean
       default: false
@@ -36,20 +38,12 @@ module.exports =
     "notDismissable":
       type: Boolean
       default: false
-    "transitionIn":
-      type: Function
-      default: ({el,cb}) ->
-        cb()
-    "transitionOut":
-      type: Function
-      default: ({el,cb}) ->
-        cb()
+    "transition":
+      type: String
 
-  data: ->
-    removeDocumentClickListener: null
-    clickInside: false
-    clickFab: false
-
+  computed:
+    mergeStyle: -> position:"fixed"
+    fabStyle: -> []
   methods:
     onHover: ->
       @open() unless @clickToToggle
@@ -58,7 +52,7 @@ module.exports =
       @close() unless @clickToToggle
 
     onFabClick: (e) ->
-      if @clickToToggle
+      if @clickToToggle and not e.defaultPrevented
         e.preventDefault()
         @toggle()
         @clickFab = true
@@ -74,11 +68,13 @@ module.exports =
 
     show: ->
       return if @opened
+      @$emit "before-open"
       @setOpened()
+      @$emit "opened" unless @transition?
       @$nextTick =>
         if not @notDismissable and @clickToToggle
           @removeDocumentClickListener?()
-          @removeDocumentClickListener = @onceDocument "click", (e) =>
+          @removeDocumentClickListener = @onceDocument "click", =>
             @hide() unless @clickInside
             return !@clickInside #should remove?
           @removeDocumentKeyupListener?()
@@ -89,9 +85,6 @@ module.exports =
                 @hide()
                 return true
             return false
-        @$emit "before-open"
-        @transitionIn el:@$els.fab, cb: =>
-          @$emit "opened"
 
     hide: ->
       return unless @opened
@@ -100,9 +93,8 @@ module.exports =
       @removeDocumentKeyupListener?()
       @removeDocumentKeyupListener = null
       @$emit "before-close"
-      @transitionOut el:@$els.fab, cb: =>
-        @setClosed()
-        @$emit "closed"
+      @setClosed()
+      @$emit "closed" unless @transition?
 
     open: ->
       @show()
@@ -120,9 +112,4 @@ module.exports =
   dettached: ->
     @removeDocumentClickListener?()
     @removeDocumentKeyupListener?()
-
-  events:
-    close: ->
-      @close()
-      return true
 </script>

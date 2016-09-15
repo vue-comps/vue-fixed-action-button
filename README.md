@@ -30,24 +30,24 @@ components:
 see [`dev/`](https://github.com/vue-comps/vue-fixed-action-button/tree/master/dev) for examples.
 
 #### Props
-| Name | type | default | description |
-| ---:| --- | ---| --- |
-| class | Array or Object | ["fixed-action-btn"] | class of the `div`|
-| not-dismissable| Boolean | false | will be not close on click outside of menu (only with click-to-toggle)|
-| close-on-click | Boolean | false | will be closed on click inside of menu |
-| click-to-toggle | Boolean | false | opens on click instead of hover |
-| is-opened | Boolean | false | (two-way) set to open / close |
-| transition-in | function | no animation | animation for the list. Argument: {el,cb} |
-| transition-out | function | no animation | animation for the list. Argument: {el,cb} |
+Name | type | default | description
+---:| --- | ---| ---
+class | Array or Object | ["fixed-action-btn"] | class of the `div`
+not-dismissable| Boolean | false | will be not close on click outside of menu (only with click-to-toggle)
+close-on-click | Boolean | false | will be closed on click inside of menu
+click-to-toggle | Boolean | false | opens on click instead of hover
+is-opened | Boolean | false | (two-way) set to open / close
+transition | String | - | name of vue transition
 
 #### Events
-| Name |  description |
-| ---:| --- |
-| close |  when received, will close |
-| before-open | will be called before open animation |
-| opened |  will be called when opened |
-| before-close |  will be called before close animation |
-| closed |  will be called when closed |
+Name |  description
+---:| ---
+before-open | will be called before open animation
+opened |  will be called when opened
+before-close |  will be called before close animation
+closed |  will be called when closed
+
+When a transition is given, it must emit the `opened` and `closed` events.
 
 # Development
 Clone repository.
@@ -56,6 +56,11 @@ npm install
 npm run dev
 ```
 Browse to `http://localhost:8080/`.
+
+## Changelog
+- 1.0.0  
+moved transition to `vue-transitions`  
+changed element from `span` to `a`  
 
 ## License
 Copyright (c) 2016 Paul Pflugradt
