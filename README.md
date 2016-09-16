@@ -37,17 +37,43 @@ not-dismissable| Boolean | false | will be not close on click outside of menu (o
 close-on-click | Boolean | false | will be closed on click inside of menu
 click-to-toggle | Boolean | false | opens on click instead of hover
 is-opened | Boolean | false | (two-way) set to open / close
-transition | String | - | name of vue transition
+transition | String | - | name of a vue transition. [Detailed description](#transition)
 
 #### Events
 Name |  description
 ---:| ---
-before-open | will be called before open animation
-opened |  will be called when opened
-before-close |  will be called before close animation
-closed |  will be called when closed
+before-enter | will be called before open animation
+after-enter |  will be called when opened
+before-leave |  will be called before close animation
+after-leave |  will be called when closed
 
-When a transition is given, it must emit the `opened` and `closed` events.
+#### Transition
+
+You can provide a vue transition like this:
+```js
+Vue.transition("fade",{
+  // your transition
+})
+// or in the instance:
+transitions: {
+  fade: {
+    // your transition
+  }
+}
+// usage:
+template: "<fab transition='fade'></fab>"
+```
+
+
+## Changelog
+
+- 1.1.0  
+moved transition to `vue-transitions` properly
+events are renamed after vue transitions  
+
+- 1.0.0  
+moved transition to `vue-transitions`  
+changed element from `span` to `a`  
 
 # Development
 Clone repository.
@@ -56,11 +82,6 @@ npm install
 npm run dev
 ```
 Browse to `http://localhost:8080/`.
-
-## Changelog
-- 1.0.0  
-moved transition to `vue-transitions`  
-changed element from `span` to `a`  
 
 ## License
 Copyright (c) 2016 Paul Pflugradt

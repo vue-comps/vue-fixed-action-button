@@ -7,7 +7,7 @@ div(
     @mouseleave="onUnhover",
     :class="computedClass"
     )
-  ul(v-if="opened",v-el:fab, v-bind:transition="transition",v-bind:style="fabStyle")
+  ul(v-if="opened",v-el:fab, v-bind:transition="cTransition",v-bind:style="fabStyle")
     slot
   a(@click="onFabClick")
     slot(name="fab")
@@ -21,6 +21,7 @@ module.exports =
     require("vue-mixins/isOpened")
     require("vue-mixins/style")
     require("vue-mixins/class")
+    require("vue-mixins/transition")
   ]
 
 
@@ -38,12 +39,11 @@ module.exports =
     "notDismissable":
       type: Boolean
       default: false
-    "transition":
-      type: String
 
   computed:
     mergeStyle: -> position:"fixed"
     fabStyle: -> []
+
   methods:
     onHover: ->
       @open() unless @clickToToggle
