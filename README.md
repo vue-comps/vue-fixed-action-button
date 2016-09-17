@@ -46,6 +46,7 @@ before-enter | will be called before open animation
 after-enter |  will be called when opened
 before-leave |  will be called before close animation
 after-leave |  will be called when closed
+toggled(isOpened:Boolean) | emitted when gets opened or closed. Alternative to use two-way `is-opened` prop
 
 #### Transition
 
@@ -66,6 +67,8 @@ template: "<fab transition='fade'></fab>"
 
 
 ## Changelog
+-  
+added toggled event  
 
 - 1.1.0  
 moved transition to `vue-transitions` properly
