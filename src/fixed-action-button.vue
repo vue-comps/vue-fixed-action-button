@@ -26,19 +26,22 @@ module.exports =
 
 
   props:
-    "class":
+    class:
       default: -> ["fixed-action-btn"]
-    "style":
+    style:
       default: -> []
-    "closeOnClick":
+    closeOnClick:
       type: Boolean
       default: false
-    "clickToToggle":
+    clickToToggle:
       type: Boolean
       default: false
-    "notDismissable":
+    notDismissable:
       type: Boolean
       default: false
+    transition:
+      type: String
+      default: "fab"
 
   computed:
     mergeStyle: -> position:"fixed"

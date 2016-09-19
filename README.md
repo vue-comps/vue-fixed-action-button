@@ -37,7 +37,7 @@ not-dismissable| Boolean | false | will be not close on click outside of menu (o
 close-on-click | Boolean | false | will be closed on click inside of menu
 click-to-toggle | Boolean | false | opens on click instead of hover
 is-opened | Boolean | false | (two-way) set to open / close
-transition | String | - | name of a vue transition. [Detailed description](#transition)
+transition | String | "fab" | name of a vue transition. [Detailed description](#transition)
 
 #### Events
 Name |  description
@@ -67,8 +67,9 @@ template: "<fab transition='fade'></fab>"
 
 
 ## Changelog
--  
+- 1.2.0  
 added toggled event  
+set default transition  
 
 - 1.1.0  
 moved transition to `vue-transitions` properly
