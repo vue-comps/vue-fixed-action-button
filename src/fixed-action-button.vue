@@ -7,7 +7,12 @@ div(
     @mouseleave="onUnhover",
     :class="computedClass"
     )
-  ul(v-if="opened",v-el:fab, v-bind:transition="cTransition",v-bind:style="fabStyle")
+  ul(
+    v-if="opened",
+    v-el:fab,
+    :transition="cTransition",
+    :style="fabStyle"
+    )
     slot
   a(@click="onFabClick")
     slot(name="fab")
@@ -44,7 +49,9 @@ module.exports =
       default: "fab"
 
   computed:
-    mergeStyle: -> position:"fixed"
+    mergeStyle: ->
+      position:"fixed"
+      userSelect: "none"
     fabStyle: -> []
 
   methods:
@@ -71,9 +78,7 @@ module.exports =
 
     show: ->
       return if @opened
-      @$emit "before-open"
       @setOpened()
-      @$emit "opened" unless @transition?
       @$nextTick =>
         if not @notDismissable and @clickToToggle
           @removeDocumentClickListener?()
@@ -95,9 +100,7 @@ module.exports =
       @removeDocumentClickListener = null
       @removeDocumentKeyupListener?()
       @removeDocumentKeyupListener = null
-      @$emit "before-close"
       @setClosed()
-      @$emit "closed" unless @transition?
 
     open: ->
       @show()

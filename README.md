@@ -67,6 +67,9 @@ template: "<fab transition='fade'></fab>"
 
 
 ## Changelog
+- 1.2.1  
+cleanup  
+
 - 1.2.0  
 added toggled event  
 set default transition  
