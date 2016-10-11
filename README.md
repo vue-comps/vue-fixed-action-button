@@ -43,7 +43,7 @@ transition-name | String | "fab" | name of a css transition
 #### Events
 Name |  description
 ---:| ---
-toggled(isOpened:Boolean) | emitted when gets opened or closed. Alternative to use two-way `is-opened` prop
+toggled(isOpened:Boolean) | emitted when gets opened or closed.
 
 #### Transition
 You can provide a default js transition like this:
