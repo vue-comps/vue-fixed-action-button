@@ -23,8 +23,8 @@ components:
 ```html
 <fab style="bottom:20px;right:20px">
   <button slot="fab">hover me</button>
-  <li><button>Action 1</button></li>
-  <li><button>Action 2</button></li>
+  <li key=1><button>Action 1</button></li>
+  <li key=2><button>Action 2</button></li>
 </fab>
 ```
 see [`dev/`](https://github.com/vue-comps/vue-fixed-action-button/tree/master/dev) for examples.
@@ -36,37 +36,39 @@ class | Array or Object | ["fixed-action-btn"] | class of the `div`
 not-dismissable| Boolean | false | will be not close on click outside of menu (only with click-to-toggle)
 close-on-click | Boolean | false | will be closed on click inside of menu
 click-to-toggle | Boolean | false | opens on click instead of hover
-is-opened | Boolean | false | (two-way) set to open / close
-transition | String | "fab" | name of a vue transition. [Detailed description](#transition)
+is-opened | Boolean | false | set to open / close
+transition | String | "fab-transition" | name of a [reusable vue transition-group](http://vuejs.org/guide/transitions.html#Reusable-Transitions)
+transition-name | String | "fab" | name of a css transition
 
 #### Events
 Name |  description
 ---:| ---
-before-enter | will be called before open animation
-after-enter |  will be called when opened
-before-leave |  will be called before close animation
-after-leave |  will be called when closed
 toggled(isOpened:Boolean) | emitted when gets opened or closed. Alternative to use two-way `is-opened` prop
 
 #### Transition
-
-You can provide a vue transition like this:
+You can provide a default js transition like this:
 ```js
-Vue.transition("fade",{
-  // your transition
-})
-// or in the instance:
-transitions: {
-  fade: {
-    // your transition
+// must be a transition group
+// be sure to pass down the context data
+Vue.component('fab-transition', {
+  functional: true
+  render: function(h,context) {
+    context.data.attrs.name = "fade"
+    context.data.props = {css: false}
+    context.data.on = {
+      enter: ...
+    }
+    return h "transition-group",context.data,context.children)
   }
-}
-// usage:
-template: "<fab transition='fade'></fab>"
+})
 ```
 
-
 ## Changelog
+- 2.0.0  
+now compatible with vue 2.0.0  
+changed way of using own transition  
+every item needs a key now  
+
 - 1.2.1  
 cleanup  
 

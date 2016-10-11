@@ -17,57 +17,57 @@ describe "fixed-action-button", ->
       #unloadComp(env)
 
     it "should work on hover", (done) ->
-      mouseevent "mouseenter",env.$els.buttonhover, ->
+      mouseevent "mouseenter",env.$refs.buttonhover, ->
         env.$refs.hover.opened.should.be.true
-        mouseevent "click",env.$els.buttonhoverinner, ->
+        mouseevent "click",env.$refs.buttonhoverinner, ->
           env.$refs.hover.opened.should.be.true
-          mouseevent "mouseleave",env.$els.buttonhover, ->
+          mouseevent "mouseleave",env.$refs.buttonhover, ->
             env.$refs.hover.opened.should.be.false
             done()
 
 
 
     it "should work on hover / close-on-click", (done) ->
-      mouseevent "mouseenter",env.$els.buttonhovercoc, ->
+      mouseevent "mouseenter",env.$refs.buttonhovercoc, ->
         env.$refs.hovercoc.opened.should.be.true
-        mouseevent "click",env.$els.buttonhovercocinner, ->
+        mouseevent "click",env.$refs.buttonhovercocinner, ->
           env.$refs.hovercoc.opened.should.be.false
           done()
 
     it "should work on click", (done) ->
-      mouseevent "mouseenter",env.$els.buttonclick, ->
-        env.$refs.click.opened.should.be.false
-        mouseevent "click",env.$els.buttonclick, ->
+      mouseevent "mouseenter",env.$refs.buttonclick, ->
+        should.not.exist env.$refs.click.opened
+        mouseevent "click",env.$refs.buttonclick, ->
           env.$refs.click.opened.should.be.true
-          mouseevent "click",env.$els.buttonclickinner, ->
+          mouseevent "click",env.$refs.buttonclickinner, ->
             env.$refs.click.opened.should.be.true
-            mouseevent "mouseleave",env.$els.buttonclick, ->
+            mouseevent "mouseleave",env.$refs.buttonclick, ->
               env.$refs.click.opened.should.be.true
-              mouseevent "click",env.$els.buttonclick, ->
+              mouseevent "click",env.$refs.buttonclick, ->
                 env.$refs.click.opened.should.be.false
                 done()
 
     it "should dismiss on outside click", (done) ->
-      mouseevent "click",env.$els.buttonclick, ->
+      mouseevent "click",env.$refs.buttonclick, ->
         env.$refs.click.opened.should.be.true
         mouseevent "click",document.documentElement, ->
           env.$refs.click.opened.should.be.false
           done()
 
     it "should work with not-dismissable", (done) ->
-      mouseevent "click",env.$els.buttonclicknd, ->
+      mouseevent "click",env.$refs.buttonclicknd, ->
         env.$refs.clicknd.opened.should.be.true
         mouseevent "click",document.documentElement, ->
           env.$refs.clicknd.opened.should.be.true
-          mouseevent "click",env.$els.buttonclicknd, ->
+          mouseevent "click",env.$refs.buttonclicknd, ->
             env.$refs.clicknd.opened.should.be.false
             done()
 
     it "should work on click / close-on-click", (done) ->
-      mouseevent "mouseenter",env.$els.buttonclickcoc, ->
-        env.$refs.clickcoc.opened.should.be.false
-        mouseevent "click",env.$els.buttonclickcoc, ->
+      mouseevent "mouseenter",env.$refs.buttonclickcoc, ->
+        should.not.exist env.$refs.clickcoc.opened
+        mouseevent "click",env.$refs.buttonclickcoc, ->
           env.$refs.clickcoc.opened.should.be.true
-          mouseevent "click",env.$els.buttonclickcocinner, ->
+          mouseevent "click",env.$refs.buttonclickcocinner, ->
             env.$refs.clickcoc.opened.should.be.false
             done()

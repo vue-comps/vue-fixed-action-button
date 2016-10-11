@@ -7,12 +7,13 @@ div(
     @mouseleave="onUnhover",
     :class="computedClass"
     )
-  ul(
+  transition-group(
+    tag="ul",
     v-if="opened",
-    v-el:fab,
-    :transition="cTransition",
+    :name="transitionName",
+    :is="cTransitionGroup",
     :style="fabStyle"
-    )
+  )
     slot
   a(@click="onFabClick")
     slot(name="fab")
@@ -23,10 +24,10 @@ module.exports =
 
   mixins:[
     require("vue-mixins/onceDocument")
-    require("vue-mixins/isOpened")
+    require("vue-mixins/isOpened2")
     require("vue-mixins/style")
     require("vue-mixins/class")
-    require("vue-mixins/transition")
+    require("vue-mixins/transition2")
   ]
 
 
@@ -46,6 +47,9 @@ module.exports =
       default: false
     transition:
       type: String
+      default: "fab-transition"
+    transitionName:
+      type: String
       default: "fab"
 
   computed:
@@ -62,11 +66,13 @@ module.exports =
       @close() unless @clickToToggle
 
     onFabClick: (e) ->
-      if @clickToToggle and not e.defaultPrevented
-        e.preventDefault()
-        @toggle()
+      unless e.defaultPrevented
         @clickFab = true
         setTimeout (=>@clickFab = false),10
+        if @clickToToggle
+          e.preventDefault()
+          @toggle()
+
 
     onInnerClick: ->
       @setClickInside()
@@ -115,7 +121,7 @@ module.exports =
         @open()
 
 
-  dettached: ->
+  beforeDestroy: ->
     @removeDocumentClickListener?()
     @removeDocumentKeyupListener?()
 </script>
