@@ -1,3 +1,5 @@
+# DEPRECATED
+
 # vue-fixed-action-button
 
 a simple fixed-action-button.
